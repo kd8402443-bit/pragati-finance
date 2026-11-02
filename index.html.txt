@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>प्रगति फाइनेंस</title>
+    <style>
+        body {
+            background-color: #FFD700;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+        .header-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .logo {
+            width: 60px;
+            height: 60px;
+            background-color: black;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 14px;
+        }
+        h1 {
+            color: #111;
+            font-size: 28px;
+            margin: 0;
+        }
+        .welcome-text {
+            color: #333;
+            font-size: 18px;
+            margin-top: 5px;
+            font-weight: bold;
+        }
+        hr {
+            border: none;
+            height: 3px;
+            background-color: black;
+            margin-top: 15px;
+            margin-bottom: 15px;
+        }
+        .sub-heading {
+            color: #222;
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+        /* क्लिक करने वाले एरिया को लिंक बनाने के लिए स्टाइल */
+        .clickable-box {
+            text-decoration: none;
+            display: block;
+            color: inherit;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- इस पूरे हिस्से को लिंक बना दिया गया है ताकि कहीं भी क्लिक करने पर अगला पेज खुले -->
+    <a href="next.html" class="clickable-box">
+        <div class="header-container">
+            <div class="logo">cunu</div>
+            <div>
+                <h1>प्रगति फाइनेंस</h1>
+                <div class="welcome-text">welcome dear friends</div>
+            </div>
+        </div>
+
+        <hr>
+
+        <div class="sub-heading">
+            मेरा मनी स्पोर्ड कमेटी में आपका स्वागत है
+        </div>
+    </a>
+
+</body>
+</html>

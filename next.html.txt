@@ -1,0 +1,172 @@
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>प्रगति फाइनेंस</title>
+    <style>
+        /* पूरे पेज का बैकग्राउंड पीला करने के लिए */
+        body {
+            background-color: #FFD700; /* चटक पीला रंग */
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+
+        /* लोगो और हेडिंग को एक लाइन में सेट करने के लिए */
+        .header-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        /* लोगो का गोल डिज़ाइन */
+        .logo {
+            width: 60px;
+            height: 60px;
+            background-color: black;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        /* मुख्य हेडिंग (प्रगति फाइनेंस) */
+        h1 {
+            color: #111;
+            font-size: 28px;
+            margin: 0;
+        }
+
+        /* वेलकम टेक्स्ट */
+        .welcome-text {
+            color: #333;
+            font-size: 18px;
+            margin-top: 5px;
+            font-weight: bold;
+        }
+
+        /* काली लाइन */
+        hr {
+            border: none;
+            height: 3px;
+            background-color: black;
+            margin-top: 15px;
+            margin-bottom: 15px;
+        }
+
+        /* नीचे का सब-टెక్सट */
+        .sub-heading {
+            color: #222;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header-container">
+        <!-- गोल लोगो (यहाँ आप अपनी तस्वीर भी लगा सकते हैं) -->
+        <div class="logo">cunu</div>
+        <div>
+            <h1>प्रगति फाइनेंस</h1>
+            <div class="welcome-text">welcome dear friends</div>
+        </div>
+    </div>
+
+    <!-- काली लाइन -->
+    <hr>
+
+    <div class="sub-heading">
+        मेरा मनी स्पोर्ड कमेटी में आपका स्वागत है
+    </div>
+
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>प्रगति फाइनेंस - मेनू</title>
+    <style>
+        /* पूरे पेज का पीला बैकग्राउंड */
+        body {
+            background-color: #FFD700;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+
+        /* हरी बॉर्डर वाला मुख्य बॉक्स */
+        .main-box {
+            border: 5px solid #0B6623; /* गहरा हरा रंग */
+            background-color: #FFD700;
+            padding: 20px;
+            max-width: 500px;
+            margin: 20px auto;
+            box-sizing: border-box;
+        }
+
+        /* होम आइकॉन और टेक्स्ट */
+        .home-section {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 22px;
+            font-weight: bold;
+            color: #111;
+            margin-bottom: 25px;
+        }
+
+        /* विकल्पों की सूची (Links) */
+        .menu-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .menu-list li {
+            font-size: 22px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .menu-list a {
+            color: #111;
+            text-decoration: none;
+        }
+
+        /* लाल लाइन (अंडरलाइन) */
+        .menu-list hr {
+            border: none;
+            height: 3px;
+            background-color: red;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="main-box">
+        <!-- Home Icon & Text -->
+        <div class="home-section">
+            <span>🏠</span> home
+        </div>
+
+        <!-- Options List -->
+        <ul class="menu-list">
+            <li>
+                <a href="form.html">1. फॉर्म भरें -now</a>
+                <hr>
+            </li>
+            <li>
+                <a href="data.html">2. अपना डेटा देखें - now</a>
+                <hr>
+            </li>
+        </ul>
+    </div>
+
+</body>
+</html>
