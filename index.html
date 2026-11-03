@@ -1,82 +1,399 @@
-<!DOCTYPE html>
+
+     <!DOCTYPE html>
 <html lang="hi">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>प्रगति फाइनेंस</title>
-    <style>
-        body {
-            background-color: #FFD700;
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 20px;
-        }
-        .header-container {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-        .logo {
-            width: 60px;
-            height: 60px;
-            background-color: black;
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            font-size: 14px;
-        }
-        h1 {
-            color: #111;
-            font-size: 28px;
-            margin: 0;
-        }
-        .welcome-text {
-            color: #333;
-            font-size: 18px;
-            margin-top: 5px;
-            font-weight: bold;
-        }
-        hr {
-            border: none;
-            height: 3px;
-            background-color: black;
-            margin-top: 15px;
-            margin-bottom: 15px;
-        }
-        .sub-heading {
-            color: #222;
-            font-size: 16px;
-            margin-bottom: 20px;
-        }
-        /* क्लिक करने वाले एरिया को लिंक बनाने के लिए स्टाइल */
-        .clickable-box {
-            text-decoration: none;
-            display: block;
-            color: inherit;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>प्रगति फाइनेंसर</title>
+
+<style>
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #10b5b3;
+  color: #062d28;
+}
+header {
+  text-align: center;
+  padding: 20px 10px;
+  background: #08aaa7;
+}
+header h1 {
+  font-size: 35px;
+  margin: 5px;
+  color: #075d31;
+}
+header p {
+  font-size: 20px;
+  margin: 5px;
+}
+.home-icon {
+  font-size: 23px;
+  margin: 12px;
+  text-align: left;
+}
+.container {
+  max-width: 500px;
+  margin: 20px auto;
+  padding: 15px;
+}
+.card {
+  background: white;
+  padding: 22px;
+  border-radius: 14px;
+  box-shadow: 0 4px 12px #087c7770;
+}
+h2 {
+  text-align: center;
+  color: #087c58;
+}
+label {
+  display: block;
+  font-weight: bold;
+  margin-top: 14px;
+}
+input, select {
+  width: 100%;
+  padding: 13px;
+  margin-top: 6px;
+  border: 1px solid #aaa;
+  border-radius: 7px;
+  font-size: 16px;
+}
+button {
+  width: 100%;
+  padding: 14px;
+  margin-top: 18px;
+  border: none;
+  border-radius: 8px;
+  background: #087c58;
+  color: white;
+  font-size: 17px;
+  font-weight: bold;
+  cursor: pointer;
+}
+button:active {
+  background: #034b37;
+}
+.now {
+  color: #f4ff00;
+  font-weight: bold;
+  animation: glow 1s infinite alternate;
+  text-shadow: 0 0 5px #fff,
+               0 0 12px #ffec00,
+               0 0 22px #ff9900;
+}
+@keyframes glow {
+  from { opacity: .55; }
+  to { opacity: 1; }
+}
+.menu-item {
+  font-size: 23px;
+  margin: 22px 0;
+  cursor: pointer;
+}
+.page {
+  display: none;
+}
+.page.active {
+  display: block;
+}
+.result {
+  background: #e9fff3;
+  padding: 14px;
+  border-radius: 8px;
+  margin-top: 15px;
+}
+.small {
+  font-size: 13px;
+  color: #555;
+}
+</style>
 </head>
+
 <body>
 
-    <!-- इस पूरे हिस्से को लिंक बना दिया गया है ताकि कहीं भी क्लिक करने पर अगला पेज खुले -->
-    <a href="next.html" class="clickable-box">
-        <div class="header-container">
-            <div class="logo">cunu</div>
-            <div>
-                <h1>प्रगति फाइनेंस</h1>
-                <div class="welcome-text">welcome dear friends</div>
-            </div>
-        </div>
+<header>
+  <h1>प्रगति फाइनेंसर</h1>
+  <p>Welcome Dear Friends</p>
+  <p>मेरा मनी सपोर्ट कमेटी में आपका स्वागत है</p>
+</header>
 
-        <hr>
+<!-- HOME PAGE -->
+<div id="home" class="page active">
+  <div class="container">
+    <div class="home-icon">🏠 HOME</div>
 
-        <div class="sub-heading">
-            मेरा मनी स्पोर्ड कमेटी में आपका स्वागत है
-        </div>
-    </a>
+    <div class="card">
+      <div class="menu-item" onclick="showPage('form')">
+        1. फॉर्म भरें -
+        <span class="now">NOW</span>
+      </div>
+
+      <div class="menu-item" onclick="showPage('data')">
+        2. अपना डेटा देखें -
+        <span class="now">NOW</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- REGISTRATION FORM -->
+<div id="form" class="page">
+  <div class="container">
+    <div class="card">
+      <h2>Registration Form</h2>
+
+      <form id="memberForm">
+
+        <label>पूरा नाम</label>
+        <input id="fullname" type="text"
+        placeholder="अपना पूरा नाम लिखें" required>
+
+        <label>सदस्य ID</label>
+        <input id="memberid" type="text"
+        placeholder="अपना सदस्य ID लिखें" required>
+
+        <label>आधार के अंतिम 4 अंक</label>
+        <input id="aadhaar" type="text"
+        inputmode="numeric" maxlength="4"
+        pattern="[0-9]{4}" placeholder="केवल अंतिम 4 अंक" required>
+
+        <label>पता</label>
+        <input id="address" type="text"
+        placeholder="अपना पता लिखें" required>
+
+        <label>फोन नंबर</label>
+        <input id="phone" type="tel"
+        inputmode="numeric" maxlength="10"
+        pattern="[0-9]{10}" placeholder="10 अंकों का नंबर" required>
+
+        <label>अपना Section चुनें</label>
+        <select id="section" required>
+          <option value="">Select Section</option>
+          <option>A</option>
+          <option>B</option>
+          <option>C</option>
+          <option>D</option>
+        </select>
+
+        <label>पैसा जमा करने का महीना</label>
+        <select id="month" required>
+          <option value="">Select Month</option>
+          <option>जनवरी</option>
+          <option>फरवरी</option>
+          <option>मार्च</option>
+          <option>अप्रैल</option>
+          <option>मई</option>
+          <option>जून</option>
+          <option>जुलाई</option>
+          <option>अगस्त</option>
+          <option>सितंबर</option>
+          <option>अक्टूबर</option>
+          <option>नवंबर</option>
+          <option>दिसंबर</option>
+        </select>
+
+        <label>जमा की गई राशि (₹)</label>
+        <input id="amount" type="number"
+        min="0" placeholder="राशि लिखें" required>
+
+        <label>Captcha ID</label>
+        <input id="captchaID" type="text"
+        placeholder="अपना Captcha ID लिखें" required>
+
+        <label>Captcha हल करें</label>
+        <div id="captchaQuestion"></div>
+        <input id="captchaAnswer" type="number"
+        placeholder="उत्तर लिखें" required>
+
+        <button type="button" onclick="refreshCaptcha()">
+          नया Captcha
+        </button>
+
+        <button type="submit">SUBMIT</button>
+
+        <p class="small">
+          यह अभी डेमो फॉर्म है। जानकारी अभी ऑनलाइन सेव नहीं होती।
+        </p>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- DATA PAGE -->
+<div id="data" class="page">
+  <div class="container">
+    <div class="card">
+      <h2>अपना डेटा देखें</h2>
+
+      <div id="memberResult">
+        <p>अपना डेटा देखने के लिए पहले फॉर्म भरें।</p>
+      </div>
+
+      <button onclick="showPage('pdf')">
+        YOUR PDF देखें
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- PDF SEARCH PAGE -->
+<div id="pdf" class="page">
+  <div class="container">
+    <div class="card">
+      <h2>YOUR PDF</h2>
+
+      <label>Enter PDF Name</label>
+      <input id="pdfName" type="text"
+      placeholder="PDF का पूरा नाम लिखें">
+
+      <button onclick="searchPDF()">
+        SEARCH PDF
+      </button>
+
+      <div id="pdfResult"></div>
+      <div id="pdfViewer"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+
+// PAGE CHANGE
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p => {
+    p.classList.remove('active');
+  });
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0,0);
+}
+
+// CAPTCHA
+let correctAnswer;
+
+function refreshCaptcha() {
+  const a = Math.floor(Math.random()*9)+1;
+  const b = Math.floor(Math.random()*9)+1;
+
+  correctAnswer = a+b;
+
+  document.getElementById('captchaQuestion').innerHTML =
+  "<b>CAPTCHA: "+a+" + "+b+" = ?</b>";
+}
+
+refreshCaptcha();
+
+// MEMBER FORM
+let memberData = null;
+
+document.getElementById('memberForm')
+.addEventListener('submit', function(e) {
+
+  e.preventDefault();
+
+  const answer = Number(
+    document.getElementById('captchaAnswer').value
+  );
+
+  if(answer !== correctAnswer) {
+    alert("गलत Captcha! दोबारा प्रयास करें।");
+    refreshCaptcha();
+    return;
+  }
+
+  memberData = {
+    name: document.getElementById('fullname').value,
+    id: document.getElementById('memberid').value,
+    aadhaar: document.getElementById('aadhaar').value,
+    address: document.getElementById('address').value,
+    phone: document.getElementById('phone').value,
+    section: document.getElementById('section').value,
+    month: document.getElementById('month').value,
+    amount: document.getElementById('amount').value
+  };
+
+  document.getElementById('memberResult').innerHTML = `
+    <div class="result">
+      <h3>आपका भरा हुआ डेटा</h3>
+      <p>नाम: ${safe(memberData.name)}</p>
+      <p>सदस्य ID: ${safe(memberData.id)}</p>
+      <p>आधार के अंतिम 4 अंक: ${safe(memberData.aadhaar)}</p>
+      <p>पता: ${safe(memberData.address)}</p>
+      <p>फोन: ${safe(memberData.phone)}</p>
+      <p>Section: ${safe(memberData.section)}</p>
+      <p>महीना: ${safe(memberData.month)}</p>
+      <p>राशि: ₹${safe(memberData.amount)}</p>
+    </div>
+  `;
+
+  showPage('data');
+  refreshCaptcha();
+});
+
+// SAFE TEXT
+function safe(value) {
+  const div = document.createElement('div');
+  div.textContent = String(value);
+  return div.innerHTML;
+}
+
+// GOOGLE DRIVE PDF LIST
+// यहाँ अपने PDF के वास्तविक नाम और लिंक जोड़ें।
+
+const pdfList = {
+  "JSSC Result 2026":
+  "PASTE_YOUR_GOOGLE_DRIVE_PREVIEW_LINK_HERE",
+
+  "Pragati Finance Member List":
+  "PASTE_YOUR_GOOGLE_DRIVE_PREVIEW_LINK_HERE",
+
+  "Payment Details 2026":
+  "PASTE_YOUR_GOOGLE_DRIVE_PREVIEW_LINK_HERE"
+};
+
+// EXACT PDF NAME SEARCH
+function searchPDF() {
+
+  const name = document.getElementById('pdfName')
+  .value.trim();
+
+  const result = document.getElementById('pdfResult');
+  const viewer = document.getElementById('pdfViewer');
+
+  viewer.innerHTML = "";
+
+  if(!name) {
+    result.innerHTML = "<p>कृपया PDF का नाम लिखें।</p>";
+    return;
+  }
+
+  if(Object.prototype.hasOwnProperty.call(pdfList,name)
+     && pdfList[name].startsWith("https://")) {
+
+    result.innerHTML =
+      "<div class='result'>PDF मिल गई।</div>";
+
+    const frame = document.createElement('iframe');
+    frame.src = pdfList[name];
+    frame.width = "100%";
+    frame.height = "600";
+    frame.style.border = "0";
+    frame.style.marginTop = "15px";
+
+    viewer.appendChild(frame);
+
+  } else {
+    result.innerHTML =
+      "<p style='color:red'>इस नाम की PDF नहीं मिली। सही नाम लिखें।</p>";
+  }
+}
+
+</script>
 
 </body>
 </html>
+
