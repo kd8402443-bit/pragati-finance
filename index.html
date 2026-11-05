@@ -452,6 +452,44 @@ document.getElementById('docForm')
 
 </script>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+
+// SUPABASE CONNECTION
+
+const SUPABASE_URL = "यहाँ अपना Supabase URL डालें";
+
+const SUPABASE_KEY = "यहाँ अपनी Publishable Key डालें";
+
+const supabase = window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+);
+
+
+// PAGE CHANGE
+
+function showPage(id){
+
+ document.querySelectorAll('.page')
+ .forEach(p=>p.classList.remove('active'));
+
+ document.getElementById(id)
+ .classList.add('active');
+
+ window.scrollTo(0,0);
+}
+
+
+// इसके नीचे अपना पुराना JavaScript कोड रखें:
+// MONTH 1 TO 20
+// CAPTCHA
+// REGISTRATION SUBMIT
+// DOCUMENT LOGIN
+
+</script>
+ 
 </body>
 </html>
  
