@@ -12,181 +12,167 @@ body{
  margin:0;
  font-family:Arial,sans-serif;
  background:#00aaa9;
- color:black;
+ color:#000;
 }
 
 .page{
  display:none;
  min-height:100vh;
- padding:15px;
+ padding:18px;
+ background:
+ repeating-conic-gradient(
+ from 0deg at 50% 35%,
+ #00aaa9 0deg 12deg,
+ #36b6b5 12deg 24deg
+ );
 }
+.active{display:block}
 
-.page.active{display:block}
-
-header{
+.header{
  text-align:center;
- color:#075b26;
+ color:#075b13;
+ margin:10px 0 35px;
 }
+.header h1{font-size:38px;margin:10px 0}
+.header p{font-size:20px;margin:5px}
 
-header h1{
- font-size:clamp(32px,8vw,55px);
- margin:10px 0;
-}
-
-.welcome{font-size:23px}
-
-.home-art{
- text-align:center;
- font-size:100px;
- margin:20px;
-}
-
-.home-link{
- display:block;
- width:100%;
- text-align:left;
- border:0;
- background:transparent;
- color:black;
- font-size:clamp(27px,7vw,45px);
- padding:12px 0;
- cursor:pointer;
+.home{
+ font-size:34px;
+ margin:35px 0;
+ font-weight:500;
 }
 
 .now{
- color:#00ff39;
+ color:#00ff00;
+ font-size:25px;
  font-weight:bold;
- animation:blink 1s steps(2,start) infinite;
+ animation:blink 1s infinite;
+ cursor:pointer;
 }
 
 @keyframes blink{
- to{visibility:hidden}
+ 0%,100%{opacity:1}
+ 50%{opacity:.15}
 }
 
-.panel{
- max-width:600px;
- margin:15px auto;
+.menu{
+ font-size:32px;
+ margin:25px 0;
+}
+
+.card{
+ background:#fff;
  padding:20px;
- background:white;
  border-radius:12px;
+ max-width:550px;
+ margin:15px auto;
+ box-shadow:0 3px 10px #00666655;
 }
 
-h2{
- text-align:center;
- color:#075b26;
-}
+h2{text-align:center;color:#075b13}
 
-label{
- display:block;
- margin-top:13px;
- font-weight:bold;
-}
-
-input,select,textarea{
+input,select{
  width:100%;
- padding:12px;
- margin-top:5px;
- border:1px solid #999;
+ padding:13px;
+ margin:8px 0 15px;
+ border:1px solid #888;
  border-radius:6px;
  font-size:16px;
 }
 
-button.action{
- width:100%;
- padding:13px;
- margin-top:15px;
- background:#087b35;
+label{font-weight:bold}
+
+button{
+ background:#087b24;
  color:white;
  border:0;
  border-radius:7px;
- font-size:18px;
+ padding:13px;
+ font-size:17px;
+ width:100%;
+ margin:7px 0;
+ cursor:pointer;
 }
 
-.back{background:#555!important}
+.back{
+ background:#333;
+}
 
 .receipt{
- border:2px dashed green;
- padding:15px;
- margin-top:20px;
- background:#fff;
+ background:white;
+ padding:20px;
+ border:2px dashed #087b24;
+ border-radius:8px;
+ line-height:2;
 }
 
-.receipt h3{text-align:center}
-
-.captcha{
- background:#ddd;
- padding:10px;
+#captchaText{
+ font-size:20px;
  font-weight:bold;
- letter-spacing:5px;
+ color:#075b13;
 }
 
+.small{text-align:center;font-size:13px}
 </style>
 </head>
 
 <body>
 
 <!-- HOME PAGE -->
+<div id="home" class="page active">
 
-<section id="home" class="page active">
-
-<header>
+<div class="header">
 <h1>प्रगति फाइनेंसर</h1>
-<p class="welcome">welcome dear friends</p>
-<p class="welcome">मेरा मनी सपोर्ट कमेटी में आपका स्वागत है</p>
-</header>
+<p>welcome dear friends</p>
+<p>मेरा मनी सपोर्ट कमेटी में आपका स्वागत है</p>
+</div>
 
-<div class="home-art">🤝</div>
+<div class="home">🏠 home</div>
 
-<button class="home-link" onclick="showPage('home')">
-🏠 home
-</button>
+<div class="menu">
+1. फॉर्म भरें -
+<span class="now" onclick="showPage('register')">NOW</span>
+</div>
 
-<button class="home-link" onclick="showPage('registration')">
-1. फॉर्म भरें - <span class="now">NOW</span>
-</button>
+<div class="menu">
+2. अपना डेटा देखें -
+<span class="now" onclick="showPage('document')">NOW</span>
+</div>
 
-<button class="home-link" onclick="showPage('data')">
-2. अपना डेटा देखें - <span class="now">NOW</span>
-</button>
-
-</section>
+</div>
 
 
 <!-- REGISTRATION PAGE -->
+<div id="register" class="page">
 
-<section id="registration" class="page">
-
-<div class="panel">
-
-<button class="action back" onclick="showPage('home')">
-← Home
-</button>
-
+<div class="card">
 <h2>Registration Form</h2>
 
 <form id="regForm">
 
 <label>1. नाम</label>
-<input name="name" required>
+<input id="name" required placeholder="अपना नाम लिखें">
 
 <label>2. Your ID</label>
-<input name="yourId" required>
+<input id="yourId" required placeholder="अपना ID लिखें">
 
 <label>3. Captain ID</label>
-<input name="captainId" required>
+<input id="captainId" required placeholder="Captain ID">
 
 <label>4. Your Phone Number</label>
-<input name="phone" type="tel" pattern="[0-9]{10}" maxlength="10" required>
+<input id="phone" type="tel" maxlength="10"
+required placeholder="मोबाइल नंबर">
 
 <label>5. Captain Phone Number</label>
-<input name="captainPhone" type="tel" pattern="[0-9]{10}" maxlength="10" required>
+<input id="captainPhone" type="tel" maxlength="10"
+required placeholder="Captain मोबाइल नंबर">
 
 <label>6. Your Address</label>
-<textarea name="address"></textarea>
+<input id="address" required placeholder="अपना पता लिखें">
 
 <label>7. Your Section</label>
-<select name="section" required>
-<option value="">Select Section</option>
+<select id="section" required>
+<option value="">Section चुनें</option>
 <option>A</option>
 <option>B</option>
 <option>C</option>
@@ -194,302 +180,229 @@ button.action{
 </select>
 
 <label>8. पैसे उठ जाने वाला Month</label>
-
-<select name="month" required>
-<option value="">Select Month</option>
+<select id="month" required>
+<option value="">Month चुनें</option>
 </select>
 
 <label>9. New Password</label>
-<input name="password" type="password" minlength="6" required>
+<input id="password" type="password"
+required minlength="8" placeholder="नया पासवर्ड">
 
-<label>Captcha</label>
-<div class="captcha" id="captchaCode"></div>
+<label>10. CAPTCHA</label>
+<p id="captchaText"></p>
+<input id="captchaAnswer" required
+placeholder="ऊपर का जवाब लिखें">
 
-<input id="captchaInput" placeholder="Captcha लिखें" required>
-
-<button type="button" onclick="makeCaptcha()">
-Change Captcha
+<button type="button" onclick="newCaptcha()">
+नया CAPTCHA
 </button>
 
-<button class="action" type="submit">
-SUBMIT
-</button>
+<button type="submit">SUBMIT</button>
 
 </form>
 
-<div id="receiptArea"></div>
-
+<button class="back" onclick="showPage('home')">
+HOME पर वापस जाएं
+</button>
 </div>
-</section>
-
-
-<!-- DATA PAGE -->
-
-<section id="data" class="page">
-
-<div class="panel">
-
-<button class="action back" onclick="showPage('home')">
-← Home
-</button>
-
-<h2>अपना डेटा देखें</h2>
-
-<button class="action" onclick="showPage('documentLogin')">
-Your Document
-</button>
-
 </div>
 
-</section>
+
+<!-- RECEIPT PAGE -->
+<div id="receiptPage" class="page">
+
+<div class="card">
+<h2>प्रगति फाइनेंसर</h2>
+<h3 style="text-align:center">Registration Receiving</h3>
+
+<div id="receipt" class="receipt"></div>
+
+<button onclick="window.print()">Download / Print Receiving</button>
+
+<button onclick="shareReceipt()">Share Receiving</button>
+
+<button class="back" onclick="showPage('home')">HOME</button>
+</div>
+</div>
 
 
 <!-- DOCUMENT PAGE -->
+<div id="document" class="page">
 
-<section id="documentLogin" class="page">
+<div class="card">
 
-<div class="panel">
+<h2>YOUR DOCUMENT</h2>
 
-<button class="action back" onclick="showPage('data')">
-← Back
+<p style="text-align:center">
+अपना Document देखने के लिए नीचे जानकारी भरें।
+</p>
+
+<button onclick="showPage('documentLogin')">
+YOUR DOCUMENT खोलें
 </button>
 
-<h2>Your Document Login</h2>
+<button class="back" onclick="showPage('home')">
+HOME
+</button>
+
+</div>
+</div>
+
+
+<!-- DOCUMENT LOGIN -->
+<div id="documentLogin" class="page">
+
+<div class="card">
+
+<h2>Document Login</h2>
 
 <form id="docForm">
 
-<label>Document Number</label>
-<input id="docNumber" required>
+<label>Your Registration Number</label>
+<input id="docNumber" required
+placeholder="अपना Registration Number डालें">
 
-<label>Password</label>
-<input id="docPassword" type="password" required>
-
-<button class="action" type="submit">
-PDF खोलें
-</button>
+<button type="submit">OPEN PDF</button>
 
 </form>
 
-<p id="docMessage"></p>
+<p id="docMessage" class="small"></p>
+
+<button class="back" onclick="showPage('document')">
+BACK
+</button>
 
 </div>
-
-</section>
+</div>
 
 
 <script>
 
 // PAGE CHANGE
-
 function showPage(id){
-
- document.querySelectorAll('.page')
- .forEach(p=>p.classList.remove('active'));
-
- document.getElementById(id)
- .classList.add('active');
-
+ document.querySelectorAll('.page').forEach(p=>{
+  p.classList.remove('active');
+ });
+ document.getElementById(id).classList.add('active');
  window.scrollTo(0,0);
 }
 
-
 // MONTH 1 TO 20
-
-const monthSelect=document.querySelector('[name="month"]');
+const monthSelect=document.getElementById('month');
 
 for(let i=1;i<=20;i++){
-
  let option=document.createElement('option');
-
- option.value="Month-"+i;
- option.textContent="Month-"+i;
-
+ option.value='Month-'+i;
+ option.textContent='Month-'+i;
  monthSelect.appendChild(option);
 }
 
-
 // CAPTCHA
+let correctAnswer=0;
 
-let captchaAnswer="";
-
-function makeCaptcha(){
-
- const chars="ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
-
- captchaAnswer="";
-
- for(let i=0;i<5;i++){
-
- captchaAnswer+=chars[
- Math.floor(Math.random()*chars.length)
- ];
-
- }
-
- document.getElementById('captchaCode')
- .textContent=captchaAnswer;
+function newCaptcha(){
+ let a=Math.floor(Math.random()*9)+1;
+ let b=Math.floor(Math.random()*9)+1;
+ correctAnswer=a+b;
+ document.getElementById('captchaText').textContent=
+ a+' + '+b+' = ?';
+ document.getElementById('captchaAnswer').value='';
 }
 
-makeCaptcha();
+newCaptcha();
 
 
-// REGISTRATION SUBMIT
+// REGISTRATION
+let receiptData={};
 
-document.getElementById('regForm')
-.addEventListener('submit',function(e){
+document.getElementById('regForm').addEventListener('submit',function(e){
 
  e.preventDefault();
 
- const entered=document.getElementById('captchaInput')
- .value.trim().toUpperCase();
-
- if(entered!==captchaAnswer){
-
- alert("गलत CAPTCHA");
-
- makeCaptcha();
-
- return;
+ if(Number(document.getElementById('captchaAnswer').value)
+ !==correctAnswer){
+  alert('गलत CAPTCHA! दोबारा भरें।');
+  newCaptcha();
+  return;
  }
 
- const formData=new FormData(this);
+ const phone=document.getElementById('phone').value;
+ const captainPhone=document.getElementById('captainPhone').value;
 
- const receiptNo="PF-"+Date.now();
-
- const fields=[
- ["नाम",formData.get("name")],
- ["Your ID",formData.get("yourId")],
- ["Captain ID",formData.get("captainId")],
- ["Your Phone",formData.get("phone")],
- ["Captain Phone",formData.get("captainPhone")],
- ["Address",formData.get("address")],
- ["Section",formData.get("section")],
- ["Month",formData.get("month")],
- ["Receipt Number",receiptNo]
- ];
-
- const area=document.getElementById("receiptArea");
-
- area.innerHTML="";
-
- const box=document.createElement("div");
- box.className="receipt";
-
- const heading=document.createElement("h3");
- heading.textContent="प्रगति फाइनेंसर Receiving";
-
- box.appendChild(heading);
-
- fields.forEach(([key,value])=>{
-
- const p=document.createElement("p");
-
- p.textContent=key+": "+value;
-
- box.appendChild(p);
-
- });
-
- const note=document.createElement("p");
- note.textContent="यह डेमो रसीद है। वास्तविक रजिस्ट्रेशन की पुष्टि नहीं है।";
- box.appendChild(note);
-
- area.appendChild(box);
-
- const download=document.createElement("button");
-
- download.className="action";
- download.textContent="Download Receiving";
-
- download.onclick=()=>window.print();
-
- area.appendChild(download);
-
- const share=document.createElement("button");
-
- share.className="action";
- share.textContent="Share Receiving";
-
- share.onclick=async()=>{
-
- const text=fields.map(x=>x[0]+": "+x[1]).join("\n");
-
- if(navigator.share){
-
- await navigator.share({text:text});
-
- }else if(navigator.clipboard){
-
- await navigator.clipboard.writeText(text);
-
- alert("Receiving कॉपी हो गई");
-
+ if(!/^[0-9]{10}$/.test(phone) ||
+ !/^[0-9]{10}$/.test(captainPhone)){
+  alert('10 अंकों का मोबाइल नंबर डालें।');
+  return;
  }
 
+ receiptData={
+  name:document.getElementById('name').value,
+  id:document.getElementById('yourId').value,
+  captain:document.getElementById('captainId').value,
+  phone:phone,
+  captainPhone:captainPhone,
+  address:document.getElementById('address').value,
+  section:document.getElementById('section').value,
+  month:document.getElementById('month').value
  };
 
- area.appendChild(share);
+ document.getElementById('receipt').innerHTML=`
+ <b>Name:</b> ${safe(receiptData.name)}<br>
+ <b>Your ID:</b> ${safe(receiptData.id)}<br>
+ <b>Captain ID:</b> ${safe(receiptData.captain)}<br>
+ <b>Phone:</b> ${safe(receiptData.phone)}<br>
+ <b>Captain Phone:</b> ${safe(receiptData.captainPhone)}<br>
+ <b>Address:</b> ${safe(receiptData.address)}<br>
+ <b>Section:</b> ${safe(receiptData.section)}<br>
+ <b>Month:</b> ${safe(receiptData.month)}<br>
+ <b>Status:</b> Submitted
+ `;
 
- this.reset();
-
- makeCaptcha();
-
-});
-
-
-// DOCUMENT LOGIN
-
-document.getElementById('docForm')
-.addEventListener('submit',function(e){
-
- e.preventDefault();
-
- document.getElementById('docMessage')
- .textContent=
- "PDF खोलने के लिए Supabase Database और Storage का सुरक्षित कनेक्शन जोड़ना होगा।";
+ showPage('receiptPage');
 
 });
 
-</script>
+function safe(value){
+ const div=document.createElement('div');
+ div.textContent=value;
+ return div.innerHTML;
+}
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+// SHARE RECEIPT
+async function shareReceipt(){
+ let textContent=
+ 'प्रगति फाइनेंसर Registration Receiving\n'+
+ Object.entries(receiptData)
+ .map(([k,v])=>k+': '+v).join('\n');
 
-<script>
-
-// SUPABASE CONNECTION
-
-const SUPABASE_URL = "https://zqecisvjnkjqujecblmu.supabase.co/rest/v1/";
-
-const SUPABASE_KEY = "sb_publishable_3ICLHg0yvuiYYIAYig_Oxg_uViXahTO";
-
-const supabase = window.supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_KEY
-);
-
-
-// PAGE CHANGE
-
-function showPage(id){
-
- document.querySelectorAll('.page')
- .forEach(p=>p.classList.remove('active'));
-
- document.getElementById(id)
- .classList.add('active');
-
- window.scrollTo(0,0);
+ if(navigator.share){
+  try{
+   await navigator.share({
+    title:'Registration Receiving',
+    text:textContent
+   });
+  }catch(e){}
+ }else{
+  alert('इस फोन में Share सुविधा उपलब्ध नहीं है।');
+ }
 }
 
 
-// इसके नीचे अपना पुराना JavaScript कोड रखें:
-// MONTH 1 TO 20
-// CAPTCHA
-// REGISTRATION SUBMIT
 // DOCUMENT LOGIN
+document.getElementById('docForm').addEventListener('submit',
+function(e){
+
+ e.preventDefault();
+
+ const registrationNumber =
+ document.getElementById('docNumber').value.trim();
+
+ document.getElementById('docMessage').textContent =
+ 'Registration Number: ' + registrationNumber +
+ ' की PDF खोजी जा रही है।';
+
+});
 
 </script>
- 
 </body>
 </html>
- 
