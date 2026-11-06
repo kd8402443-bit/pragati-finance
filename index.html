@@ -258,9 +258,13 @@ HOME
 
 <form id="docForm">
 
-<label>Your Registration Number</label>
+<label>Document Number</label>
 <input id="docNumber" required
-placeholder="अपना Registration Number डालें">
+placeholder="Document Number डालें">
+
+<label>Password</label>
+<input id="docPassword" type="password"
+required placeholder="Password डालें">
 
 <button type="submit">OPEN PDF</button>
 
@@ -388,69 +392,17 @@ async function shareReceipt(){
 }
 
 
-// DOCUMENT LOGIN WITH SUPABASE
-
+// DOCUMENT LOGIN
 document.getElementById('docForm').addEventListener('submit',
-async function(e){
+function(e){
 
  e.preventDefault();
 
- const registrationNumber =
- document.getElementById('docNumber').value.trim();
-
- const message =
- document.getElementById('docMessage');
-
- message.textContent = "PDF खोजी जा रही है...";
-
- try {
-
-  const { data, error } = await supabaseClient
-   .from('documents')
-   .select('pdf_url')
-   .eq('registration_number', registrationNumber)
-   .maybeSingle();
-
-  if(error) throw error;
-
-  if(!data){
-   message.textContent = "PDF नहीं मिली।";
-   return;
-  }
-
-  if(!data.pdf_url){
-   message.textContent = "PDF URL नहीं मिला।";
-   return;
-  }
-
-  window.open(data.pdf_url, '_blank');
-
-  message.textContent = "PDF खोलने का अनुरोध भेज दिया गया।";
-
- } catch(error) {
-
-  console.error(error);
-
-  message.textContent = "PDF खोलने में समस्या हुई।";
-
- }
+ document.getElementById('docMessage').textContent=
+ 'PDF खोलने के लिए Supabase से सुरक्षित Document Verification जोड़ना बाकी है।';
 
 });
-<script
- src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-</script>
- // SUPABASE CONNECTION
-
-const SUPABASE_URL = "https://zqecisvjnkjqujecblmu.supabase.co/rest/v1/";
-
-const SUPABASE_KEY = "https://zqecisvjnkjqujecblmu.supabase.co/rest/v1/";
-
-const supabaseClient = window.supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_KEY
-);
-// आपका बाकी JavaScript कोड यहाँ रहेगा।
 
 </script>
 </body>
-</html>
+ </html>
