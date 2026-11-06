@@ -388,21 +388,64 @@ async function shareReceipt(){
 }
 
 
-// DOCUMENT LOGIN
+// DOCUMENT LOGIN WITH SUPABASE
+
 document.getElementById('docForm').addEventListener('submit',
-function(e){
+async function(e){
 
  e.preventDefault();
 
  const registrationNumber =
  document.getElementById('docNumber').value.trim();
 
- document.getElementById('docMessage').textContent =
- 'Registration Number: ' + registrationNumber +
- ' की PDF खोजी जा रही है।';
+ const message =
+ document.getElementById('docMessage');
+
+ message.textContent = "PDF खोजी जा रही है...";
+
+ try {
+
+  const { data, error } = await supabaseClient
+   .from('documents')
+   .select('pdf_url')
+   .eq('registration_number', registrationNumber)
+   .maybeSingle();
+
+  if(error) throw error;
+
+  if(!data){
+   message.textContent = "PDF नहीं मिली।";
+   return;
+  }
+
+  if(!data.pdf_url){
+   message.textContent = "PDF URL नहीं मिला।";
+   return;
+  }
+
+  window.open(data.pdf_url, '_blank');
+
+  message.textContent = "PDF खोलने का अनुरोध भेज दिया गया।";
+
+ } catch(error) {
+
+  console.error(error);
+
+  message.textContent = "PDF खोलने में समस्या हुई।";
+
+ }
 
 });
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</script // SUPABASE CONNECTION
 
-</script>
+const SUPABASE_URL = "यहाँ अपना Supabase Project URL डालें";
+
+const SUPABASE_KEY = "यहाँ अपनी Publishable Key डालें";
+
+const supabaseClient = window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+);>
 </body>
 </html>
