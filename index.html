@@ -461,6 +461,9 @@ async function shareReceipt(){
 // =================================
 // 7. DOCUMENT LOGIN WITH SUPABASE
 // =================================
+ // =================================
+// 7. DOCUMENT LOGIN WITH SQL FUNCTION
+// =================================
 
 document.getElementById('docForm').addEventListener(
  'submit',
@@ -469,78 +472,63 @@ document.getElementById('docForm').addEventListener(
   e.preventDefault();
 
   const registrationNumber =
-  document.getElementById('docNumber').value.trim();
+   document.getElementById('docNumber').value.trim();
 
   const documentName =
-  document.getElementById('docName').value.trim();
+   document.getElementById('docName').value.trim();
 
   const message =
-  document.getElementById('docMessage');
+   document.getElementById('docMessage');
 
-  message.textContent="PDF खोजी जा रही है...";
+  message.textContent = "PDF खोजी जा रही है...";
 
-  // नई विंडो पहले खोलें ताकि browser popup block न करे
-  const pdfWindow=window.open('about:blank','_blank');
+  const pdfWindow = window.open('about:blank', '_blank');
 
-  if(!pdfWindow){
-
-   message.textContent="PDF खोलने के लिए browser में popup की अनुमति दें।";
-
+  if (!pdfWindow) {
+   message.textContent =
+    "Browser में Popup की अनुमति दें।";
    return;
   }
 
-  try{
+  try {
 
-   const {data,error}=await supabaseClient
+   const { data, error } = await supabaseClient.rpc(
+    'find_document',
+    {
+     p_registration_number: registrationNumber,
+     p_name: documentName
+    }
+   );
 
-    .from('documents')
+   if (error) {
+    throw error;
+   }
 
-    .select('pdf_url')
-
-    .eq('registration_number',registrationNumber)
-
-    .eq('name',documentName)
-
-    .maybeSingle();
-
-
-   if(error) throw error;
-
-
-   if(!data){
+   if (!data) {
 
     pdfWindow.close();
 
-    message.textContent="Document Number या Name गलत है, अथवा PDF नहीं मिली।";
+    message.textContent =
+     "Registration Number या Name गलत है। PDF नहीं मिली।";
 
     return;
    }
-
-
-   if(!data.pdf_url){
-
-    pdfWindow.close();
-
-    message.textContent="PDF URL नहीं मिला।";
-
-    return;
-   }
-
 
    // PDF OPEN
-   pdfWindow.location.href=data.pdf_url;
+   pdfWindow.location.href = data;
 
-   message.textContent="PDF खोल दी गई है।";
+   message.textContent = "आपका PDF खोला जा रहा है।";
 
   }
 
-  catch(error){
+  catch(error) {
 
-   console.error(error);
+   console.error("PDF Error:", error);
 
    pdfWindow.close();
 
-   message.textContent="PDF खोलने में समस्या हुई। Supabase Settings चेक करें।";
+   message.textContent =
+    "समस्या: " + error.message;
 
   }
 
