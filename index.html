@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="hi">
 <head>
@@ -95,7 +94,9 @@ button{
  cursor:pointer;
 }
 
-.back{background:#333}
+.back{
+ background:#333;
+}
 
 .receipt{
  background:white;
@@ -248,7 +249,7 @@ HOME
 </div>
 
 
-<!-- DOCUMENT LOGIN PAGE -->
+<!-- DOCUMENT LOGIN -->
 <div id="documentLogin" class="page">
 
 <div class="card">
@@ -261,9 +262,9 @@ HOME
 <input id="docNumber" required
 placeholder="Document Number डालें">
 
-<label>Your Name</label>
-<input id="docName" required
-placeholder="अपना नाम डालें">
+<label>Password</label>
+<input id="docPassword" type="password"
+required placeholder="Password डालें">
 
 <button type="submit">OPEN PDF</button>
 
@@ -279,86 +280,43 @@ BACK
 </div>
 
 
-<!-- SUPABASE LIBRARY -->
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-
-<!-- MAIN JAVASCRIPT -->
 <script>
 
-// =================================
-// 1. SUPABASE CONNECTION
-// =================================
-
-const SUPABASE_URL = "https://zqecisvjnkjqujecblmu.supabase.co";
-
-const SUPABASE_KEY = "sb_publishable_3ICLHg0yvuiYYlAYig_Oxg_uViXahTO"
-
-const supabaseClient = window.supabase.createClient(
- SUPABASE_URL,
- SUPABASE_KEY
-);
-
-
-// =================================
-// 2. PAGE CHANGE
-// =================================
-
+// PAGE CHANGE
 function showPage(id){
-
  document.querySelectorAll('.page').forEach(p=>{
   p.classList.remove('active');
  });
-
  document.getElementById(id).classList.add('active');
-
  window.scrollTo(0,0);
 }
 
-
-// =================================
-// 3. MONTH 1 TO 20
-// =================================
-
+// MONTH 1 TO 20
 const monthSelect=document.getElementById('month');
 
 for(let i=1;i<=20;i++){
-
  let option=document.createElement('option');
-
  option.value='Month-'+i;
  option.textContent='Month-'+i;
-
  monthSelect.appendChild(option);
 }
 
-
-// =================================
-// 4. CAPTCHA
-// =================================
-
+// CAPTCHA
 let correctAnswer=0;
 
 function newCaptcha(){
-
  let a=Math.floor(Math.random()*9)+1;
  let b=Math.floor(Math.random()*9)+1;
-
  correctAnswer=a+b;
-
  document.getElementById('captchaText').textContent=
  a+' + '+b+' = ?';
-
  document.getElementById('captchaAnswer').value='';
 }
 
 newCaptcha();
 
 
-// =================================
-// 5. REGISTRATION
-// =================================
-
+// REGISTRATION
 let receiptData={};
 
 document.getElementById('regForm').addEventListener('submit',function(e){
@@ -367,11 +325,8 @@ document.getElementById('regForm').addEventListener('submit',function(e){
 
  if(Number(document.getElementById('captchaAnswer').value)
  !==correctAnswer){
-
   alert('गलत CAPTCHA! दोबारा भरें।');
-
   newCaptcha();
-
   return;
  }
 
@@ -380,14 +335,11 @@ document.getElementById('regForm').addEventListener('submit',function(e){
 
  if(!/^[0-9]{10}$/.test(phone) ||
  !/^[0-9]{10}$/.test(captainPhone)){
-
   alert('10 अंकों का मोबाइल नंबर डालें।');
-
   return;
  }
 
  receiptData={
-
   name:document.getElementById('name').value,
   id:document.getElementById('yourId').value,
   captain:document.getElementById('captainId').value,
@@ -396,11 +348,9 @@ document.getElementById('regForm').addEventListener('submit',function(e){
   address:document.getElementById('address').value,
   section:document.getElementById('section').value,
   month:document.getElementById('month').value
-
  };
 
  document.getElementById('receipt').innerHTML=`
-
  <b>Name:</b> ${safe(receiptData.name)}<br>
  <b>Your ID:</b> ${safe(receiptData.id)}<br>
  <b>Captain ID:</b> ${safe(receiptData.captain)}<br>
@@ -410,132 +360,49 @@ document.getElementById('regForm').addEventListener('submit',function(e){
  <b>Section:</b> ${safe(receiptData.section)}<br>
  <b>Month:</b> ${safe(receiptData.month)}<br>
  <b>Status:</b> Submitted
-
  `;
 
  showPage('receiptPage');
 
 });
 
-
 function safe(value){
-
  const div=document.createElement('div');
-
  div.textContent=value;
-
  return div.innerHTML;
 }
 
-
-// =================================
-// 6. SHARE RECEIPT
-// =================================
-
+// SHARE RECEIPT
 async function shareReceipt(){
-
  let textContent=
  'प्रगति फाइनेंसर Registration Receiving\n'+
  Object.entries(receiptData)
  .map(([k,v])=>k+': '+v).join('\n');
 
  if(navigator.share){
-
   try{
-
    await navigator.share({
     title:'Registration Receiving',
     text:textContent
    });
-
   }catch(e){}
-
  }else{
-
   alert('इस फोन में Share सुविधा उपलब्ध नहीं है।');
-
  }
 }
 
 
-// =================================
-// 7. DOCUMENT LOGIN WITH SUPABASE
-// =================================
- // =================================
-// 7. DOCUMENT LOGIN WITH SQL FUNCTION
-// =================================
+// DOCUMENT LOGIN
+document.getElementById('docForm').addEventListener('submit',
+function(e){
 
-document.getElementById('docForm').addEventListener(
- 'submit',
- async function(e){
+ e.preventDefault();
 
-  e.preventDefault();
+ document.getElementById('docMessage').textContent=
+ 'PDF खोलने के लिए Supabase से सुरक्षित Document Verification जोड़ना बाकी है।';
 
-  const document Number=
-   document.getElementById('docNumber').value.trim();
-
-  const documentName =
-   document.getElementById('docName').value.trim();
-
-  const message =
-   document.getElementById('docMessage');
-
-  message.textContent = "PDF खोजी जा रही है...";
-
-  const pdfWindow = window.open('about:blank', '_blank');
-
-  if (!pdfWindow) {
-   message.textContent =
-    "Browser में Popup की अनुमति दें।";
-   return;
-  }
-
-  try {
-
-   const { data, error } = await supabaseClient.rpc(
-    'find_document',
-    {
-     p_registration_number: documentNumber,
-     p_name: documentName
-    }
-   );
-
-   if (error) {
-    throw error;
-   }
-
-   if (!data) {
-
-    pdfWindow.close();
-
-    message.textContent =
-     "Registration Number या Name गलत है। PDF नहीं मिली।";
-
-    return;
-   }
-
-   // PDF OPEN
-   pdfWindow.location.href = data;
-
-   message.textContent = "आपका PDF खोला जा रहा है।";
-
-  }
-
-  catch(error) {
-
-   console.error("PDF Error:", error);
-
-   pdfWindow.close();
-
-   message.textContent =
-    "समस्या: " + error.message;
-
-  }
-
- }
-);
+});
 
 </script>
-
 </body>
-</html>
+ </html>
