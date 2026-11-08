@@ -3,7 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>प्रगति फाइनेंसर</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
 *{box-sizing:border-box}
@@ -16,264 +19,253 @@ body{
 }
 
 .page{
- display:none;
  min-height:100vh;
- padding:18px;
- background:
- repeating-conic-gradient(
- from 0deg at 50% 35%,
- #00aaa9 0deg 12deg,
- #36b6b5 12deg 24deg
- );
+ padding:15px;
+ display:none;
 }
-.active{display:block}
+
+#home{display:block}
 
 .header{
  text-align:center;
- color:#075b13;
- margin:10px 0 35px;
+ padding:20px 5px;
+ color:#075d19;
 }
-.header h1{font-size:38px;margin:10px 0}
-.header p{font-size:20px;margin:5px}
 
-.home{
- font-size:34px;
- margin:35px 0;
- font-weight:500;
+.header h1{
+ font-size:38px;
+ margin:10px 0;
+}
+
+.header p{
+ font-size:20px;
+ margin:5px;
+}
+
+.home-menu{
+ margin-top:30px;
+}
+
+.menu-item{
+ font-size:30px;
+ padding:15px 5px;
+ margin:12px 0;
+ cursor:pointer;
 }
 
 .now{
  color:#00ff00;
- font-size:25px;
  font-weight:bold;
  animation:blink 1s infinite;
- cursor:pointer;
 }
 
 @keyframes blink{
  0%,100%{opacity:1}
- 50%{opacity:.15}
+ 50%{opacity:0.15}
 }
 
-.menu{
- font-size:32px;
- margin:25px 0;
-}
-
-.card{
- background:#fff;
- padding:20px;
+.panel{
+ background:white;
  border-radius:12px;
+ padding:18px;
  max-width:550px;
  margin:15px auto;
  box-shadow:0 3px 10px #00666655;
 }
 
-h2{text-align:center;color:#075b13}
+h2{
+ text-align:center;
+ color:#087c48;
+}
 
 input,select{
  width:100%;
  padding:13px;
- margin:8px 0 15px;
- border:1px solid #888;
+ margin:9px 0;
+ border:1px solid #aaa;
  border-radius:6px;
  font-size:16px;
 }
 
-label{font-weight:bold}
-
 button{
- background:#087b24;
- color:white;
+ width:100%;
+ padding:13px;
  border:0;
  border-radius:7px;
- padding:13px;
- font-size:17px;
- width:100%;
- margin:7px 0;
+ background:#087d3d;
+ color:white;
+ font-size:18px;
+ margin-top:12px;
  cursor:pointer;
 }
 
 .back{
- background:#333;
+ background:#555;
 }
 
 .receipt{
- background:white;
- padding:20px;
- border:2px dashed #087b24;
- border-radius:8px;
- line-height:2;
+ background:#f1fff2;
+ padding:15px;
+ border:2px dashed green;
+ margin-top:15px;
+ display:none;
 }
 
-#captchaText{
- font-size:20px;
- font-weight:bold;
- color:#075b13;
+small{
+ color:#555;
 }
 
-.small{text-align:center;font-size:13px}
 </style>
 </head>
 
 <body>
 
 <!-- HOME PAGE -->
-<div id="home" class="page active">
+
+<div class="page" id="home">
 
 <div class="header">
 <h1>प्रगति फाइनेंसर</h1>
-<p>welcome dear friends</p>
-<p>मेरा मनी सपोर्ट कमेटी में आपका स्वागत है</p>
+<p>Welcome Dear Friends</p>
+<p>मेरा मनी स्पोर्ट कमेटी में आपका स्वागत है</p>
 </div>
 
-<div class="home">🏠 home</div>
+<div class="home-menu">
 
-<div class="menu">
+<div class="menu-item" onclick="showPage('registration')">
+🏠 Home
+</div>
+
+<div class="menu-item" onclick="showPage('form')">
 1. फॉर्म भरें -
-<span class="now" onclick="showPage('register')">NOW</span>
+<span class="now">NOW</span>
 </div>
 
-<div class="menu">
+<div class="menu-item" onclick="showPage('search')">
 2. अपना डेटा देखें -
-<span class="now" onclick="showPage('document')">NOW</span>
+<span class="now">NOW</span>
 </div>
 
+</div>
 </div>
 
 
 <!-- REGISTRATION PAGE -->
-<div id="register" class="page">
 
-<div class="card">
+<div class="page" id="form">
+
+<div class="panel">
+
 <h2>Registration Form</h2>
 
-<form id="regForm">
+<form id="memberForm">
 
-<label>1. नाम</label>
-<input id="name" required placeholder="अपना नाम लिखें">
+<input id="name" placeholder="1. आपका नाम" required>
 
-<label>2. Your ID</label>
-<input id="yourId" required placeholder="अपना ID लिखें">
+<input id="yourid" placeholder="2. Your ID" required>
 
-<label>3. Captain ID</label>
-<input id="captainId" required placeholder="Captain ID">
+<input id="captainid" placeholder="3. Captain ID" required>
 
-<label>4. Your Phone Number</label>
-<input id="phone" type="tel" maxlength="10"
-required placeholder="मोबाइल नंबर">
+<input id="phone" type="tel"
+placeholder="4. Your Phone Number"
+pattern="[0-9]{10}" required>
 
-<label>5. Captain Phone Number</label>
-<input id="captainPhone" type="tel" maxlength="10"
-required placeholder="Captain मोबाइल नंबर">
+<input id="captainphone" type="tel"
+placeholder="5. Captain Phone Number"
+pattern="[0-9]{10}" required>
 
-<label>6. Your Address</label>
-<input id="address" required placeholder="अपना पता लिखें">
+<input id="address"
+placeholder="6. आपका सामान्य पता (गाँव/ब्लॉक)"
+required>
 
-<label>7. Your Section</label>
 <select id="section" required>
-<option value="">Section चुनें</option>
+<option value="">7. Your Section चुनें</option>
 <option>A</option>
 <option>B</option>
 <option>C</option>
 <option>D</option>
 </select>
 
-<label>8. पैसे उठ जाने वाला Month</label>
 <select id="month" required>
-<option value="">Month चुनें</option>
+<option value="">8. पैसे उठाने वाला Month चुनें</option>
+<option>Month-1</option>
+<option>Month-2</option>
+<option>Month-3</option>
+<option>Month-4</option>
+<option>Month-5</option>
+<option>Month-6</option>
+<option>Month-7</option>
+<option>Month-8</option>
+<option>Month-9</option>
+<option>Month-10</option>
+<option>Month-11</option>
+<option>Month-12</option>
+<option>Month-13</option>
+<option>Month-14</option>
+<option>Month-15</option>
+<option>Month-16</option>
+<option>Month-17</option>
+<option>Month-18</option>
+<option>Month-19</option>
+<option>Month-20</option>
 </select>
 
-<label>9. New Password</label>
-<input id="password" type="password"
-required minlength="8" placeholder="नया पासवर्ड">
+<div>
+<label id="captchaQuestion"></label>
+<input id="captchaAnswer"
+type="number" placeholder="CAPTCHA का उत्तर" required>
+</div>
 
-<label>10. CAPTCHA</label>
-<p id="captchaText"></p>
-<input id="captchaAnswer" required
-placeholder="ऊपर का जवाब लिखें">
-
-<button type="button" onclick="newCaptcha()">
-नया CAPTCHA
+<button type="submit" id="submitBtn">
+SUBMIT
 </button>
-
-<button type="submit">SUBMIT</button>
 
 </form>
 
-<button class="back" onclick="showPage('home')">
-HOME पर वापस जाएं
-</button>
-</div>
-</div>
-
-
-<!-- RECEIPT PAGE -->
-<div id="receiptPage" class="page">
-
-<div class="card">
+<div class="receipt" id="receipt">
 <h2>प्रगति फाइनेंसर</h2>
-<h3 style="text-align:center">Registration Receiving</h3>
+<h3>Registration Receiving</h3>
+<p id="receiptDetails"></p>
 
-<div id="receipt" class="receipt"></div>
-
-<button onclick="window.print()">Download / Print Receiving</button>
-
-<button onclick="shareReceipt()">Share Receiving</button>
-
-<button class="back" onclick="showPage('home')">HOME</button>
-</div>
-</div>
-
-
-<!-- DOCUMENT PAGE -->
-<div id="document" class="page">
-
-<div class="card">
-
-<h2>YOUR DOCUMENT</h2>
-
-<p style="text-align:center">
-अपना Document देखने के लिए नीचे जानकारी भरें।
-</p>
-
-<button onclick="showPage('documentLogin')">
-YOUR DOCUMENT खोलें
+<button onclick="downloadReceipt()">
+Download Receiving
 </button>
+
+<button onclick="shareReceipt()">
+Share Receiving
+</button>
+</div>
 
 <button class="back" onclick="showPage('home')">
-HOME
+HOME पर वापस जाएँ
 </button>
 
 </div>
 </div>
 
 
-<!-- DOCUMENT LOGIN -->
-<div id="documentLogin" class="page">
+<!-- DATA SEARCH PAGE -->
 
-<div class="card">
+<div class="page" id="search">
 
-<h2>Document Login</h2>
+<div class="panel">
 
-<form id="docForm">
+<h2>अपना डेटा देखें</h2>
 
-<label>Document Number</label>
-<input id="docNumber" required
-placeholder="Document Number डालें">
+<input id="searchReg"
+placeholder="Registration Number डालें">
 
-<label>Password</label>
-<input id="docPassword" type="password"
-required placeholder="Password डालें">
+<input id="searchName"
+placeholder="Your Name डालें">
 
-<button type="submit">OPEN PDF</button>
+<button onclick="findPDF()">
+SEARCH PDF
+</button>
 
-</form>
+<p id="searchMessage"></p>
 
-<p id="docMessage" class="small"></p>
-
-<button class="back" onclick="showPage('document')">
-BACK
+<button class="back" onclick="showPage('home')">
+HOME पर वापस जाएँ
 </button>
 
 </div>
@@ -282,127 +274,249 @@ BACK
 
 <script>
 
+// SUPABASE CONNECTION
+
+const SUPABASE_URL = "अपना_SUPABASE_URL_यहाँ_डालें";
+
+const SUPABASE_KEY = "अपनी_PUBLISHABLE_KEY_यहाँ_डालें";
+
+const db = window.supabase.createClient(
+SUPABASE_URL,
+SUPABASE_KEY
+);
+
+
 // PAGE CHANGE
+
 function showPage(id){
- document.querySelectorAll('.page').forEach(p=>{
-  p.classList.remove('active');
- });
- document.getElementById(id).classList.add('active');
- window.scrollTo(0,0);
+
+document.querySelectorAll(".page").forEach(p=>{
+p.style.display="none";
+});
+
+document.getElementById(id).style.display="block";
+
+window.scrollTo(0,0);
+
 }
 
-// MONTH 1 TO 20
-const monthSelect=document.getElementById('month');
-
-for(let i=1;i<=20;i++){
- let option=document.createElement('option');
- option.value='Month-'+i;
- option.textContent='Month-'+i;
- monthSelect.appendChild(option);
-}
 
 // CAPTCHA
-let correctAnswer=0;
+
+let captchaResult;
 
 function newCaptcha(){
- let a=Math.floor(Math.random()*9)+1;
- let b=Math.floor(Math.random()*9)+1;
- correctAnswer=a+b;
- document.getElementById('captchaText').textContent=
- a+' + '+b+' = ?';
- document.getElementById('captchaAnswer').value='';
+
+let a=Math.floor(Math.random()*9)+1;
+let b=Math.floor(Math.random()*9)+1;
+
+captchaResult=a+b;
+
+document.getElementById("captchaQuestion").innerText=
+"CAPTCHA: "+a+" + "+b+" = ?";
 }
 
 newCaptcha();
 
 
 // REGISTRATION
-let receiptData={};
 
-document.getElementById('regForm').addEventListener('submit',function(e){
+let currentReceipt="";
 
- e.preventDefault();
+document.getElementById("memberForm")
+.addEventListener("submit",async function(e){
 
- if(Number(document.getElementById('captchaAnswer').value)
- !==correctAnswer){
-  alert('गलत CAPTCHA! दोबारा भरें।');
-  newCaptcha();
-  return;
- }
+e.preventDefault();
 
- const phone=document.getElementById('phone').value;
- const captainPhone=document.getElementById('captainPhone').value;
+let answer=Number(
+document.getElementById("captchaAnswer").value
+);
 
- if(!/^[0-9]{10}$/.test(phone) ||
- !/^[0-9]{10}$/.test(captainPhone)){
-  alert('10 अंकों का मोबाइल नंबर डालें।');
-  return;
- }
+if(answer!==captchaResult){
 
- receiptData={
-  name:document.getElementById('name').value,
-  id:document.getElementById('yourId').value,
-  captain:document.getElementById('captainId').value,
-  phone:phone,
-  captainPhone:captainPhone,
-  address:document.getElementById('address').value,
-  section:document.getElementById('section').value,
-  month:document.getElementById('month').value
- };
+alert("गलत CAPTCHA! फिर से प्रयास करें");
 
- document.getElementById('receipt').innerHTML=`
- <b>Name:</b> ${safe(receiptData.name)}<br>
- <b>Your ID:</b> ${safe(receiptData.id)}<br>
- <b>Captain ID:</b> ${safe(receiptData.captain)}<br>
- <b>Phone:</b> ${safe(receiptData.phone)}<br>
- <b>Captain Phone:</b> ${safe(receiptData.captainPhone)}<br>
- <b>Address:</b> ${safe(receiptData.address)}<br>
- <b>Section:</b> ${safe(receiptData.section)}<br>
- <b>Month:</b> ${safe(receiptData.month)}<br>
- <b>Status:</b> Submitted
- `;
+newCaptcha();
 
- showPage('receiptPage');
+return;
+}
+
+let regNo="PF-"+Date.now()+"-"+Math.floor(Math.random()*1000);
+
+let data={
+
+reg_no:regNo,
+
+name:document.getElementById("name").value.trim(),
+
+your_id:document.getElementById("yourid").value.trim(),
+
+captain_id:document.getElementById("captainid").value.trim(),
+
+phone:document.getElementById("phone").value.trim(),
+
+captain_phone:document.getElementById("captainphone").value.trim(),
+
+address:document.getElementById("address").value.trim(),
+
+section:document.getElementById("section").value,
+
+month:document.getElementById("month").value
+
+};
+
+let btn=document.getElementById("submitBtn");
+
+btn.disabled=true;
+btn.innerText="Please Wait...";
+
+try{
+
+const {error}=await db
+.from("registrations")
+.insert([data]);
+
+if(error) throw error;
+
+currentReceipt=
+"प्रगति फाइनेंसर\n"+
+"Registration Receiving\n\n"+
+"Registration Number: "+regNo+"\n"+
+"Name: "+data.name+"\n"+
+"Your ID: "+data.your_id+"\n"+
+"Captain ID: "+data.captain_id+"\n"+
+"Phone: "+data.phone+"\n"+
+"Captain Phone: "+data.captain_phone+"\n"+
+"Section: "+data.section+"\n"+
+"Month: "+data.month+"\n"+
+"Date: "+new Date().toLocaleString("en-IN");
+
+document.getElementById("receiptDetails")
+.innerText=currentReceipt;
+
+document.getElementById("receipt").style.display="block";
+
+document.getElementById("memberForm").reset();
+
+newCaptcha();
+
+alert("Registration सफल हुआ!");
+
+}catch(error){
+
+alert("Error: "+error.message);
+
+}finally{
+
+btn.disabled=false;
+btn.innerText="SUBMIT";
+
+}
 
 });
 
-function safe(value){
- const div=document.createElement('div');
- div.textContent=value;
- return div.innerHTML;
+
+// DOWNLOAD RECEIVING
+
+function downloadReceipt(){
+
+let blob=new Blob(
+[currentReceipt],
+{type:"text/plain;charset=utf-8"}
+);
+
+let url=URL.createObjectURL(blob);
+
+let a=document.createElement("a");
+
+a.href=url;
+a.download="Pragati-Receiving.txt";
+a.click();
+
+URL.revokeObjectURL(url);
+
 }
 
-// SHARE RECEIPT
+
+// SHARE RECEIVING
+
 async function shareReceipt(){
- let textContent=
- 'प्रगति फाइनेंसर Registration Receiving\n'+
- Object.entries(receiptData)
- .map(([k,v])=>k+': '+v).join('\n');
 
- if(navigator.share){
-  try{
-   await navigator.share({
-    title:'Registration Receiving',
-    text:textContent
-   });
-  }catch(e){}
- }else{
-  alert('इस फोन में Share सुविधा उपलब्ध नहीं है।');
- }
+if(navigator.share){
+
+try{
+
+await navigator.share({
+title:"प्रगति फाइनेंसर Receiving",
+text:currentReceipt
+});
+
+}catch(e){}
+
+}else{
+
+await navigator.clipboard.writeText(currentReceipt);
+
+alert("Receiving कॉपी हो गई।");
+
+}
+
 }
 
 
-// DOCUMENT LOGIN
-document.getElementById('docForm').addEventListener('submit',
-function(e){
+// PDF SEARCH
 
- e.preventDefault();
+async function findPDF(){
 
- document.getElementById('docMessage').textContent=
- 'PDF खोलने के लिए Supabase से सुरक्षित Document Verification जोड़ना बाकी है।';
+let reg=document.getElementById("searchReg").value.trim();
 
-});
+let name=document.getElementById("searchName").value.trim();
+
+let msg=document.getElementById("searchMessage");
+
+if(!reg || !name){
+
+msg.innerText="Registration Number और Name दोनों डालें।";
+
+return;
+
+}
+
+msg.innerText="Searching...";
+
+try{
+
+const {data,error}=await db.rpc(
+"find_member_pdf",
+{
+p_reg_no:reg,
+p_name:name
+}
+);
+
+if(error) throw error;
+
+if(data && data.length>0){
+
+msg.innerText="PDF मिल गई। खोल रहे हैं...";
+
+window.open(data[0].pdf_url,"_blank");
+
+}else{
+
+msg.innerText="कोई PDF नहीं मिली। जानकारी जाँचें।";
+
+}
+
+}catch(error){
+
+msg.innerText="Error: "+error.message;
+
+}
+
+}
 
 </script>
+
 </body>
- </html>
+</html>
