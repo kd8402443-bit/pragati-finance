@@ -1,118 +1,115 @@
+
 <!DOCTYPE html>
 <html lang="hi">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>प्रगति फाइनेंसर</title>
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<title>My WhatsApp</title>
 
 <style>
-*{box-sizing:border-box}
-
-body{
- margin:0;
- font-family:Arial,sans-serif;
- background:#00aaa9;
- color:#000;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-.page{
- min-height:100vh;
- padding:15px;
- display:none;
+body {
+    background: black;
+    color: white;
+    font-family: Arial, sans-serif;
+    min-height: 100vh;
 }
 
-#home{display:block}
-
-.header{
- text-align:center;
- padding:20px 5px;
- color:#075d19;
+button {
+    cursor: pointer;
+    border: none;
+    border-radius: 8px;
+    padding: 13px;
+    background: #25D366;
+    color: black;
+    font-weight: bold;
 }
 
-.header h1{
- font-size:38px;
- margin:10px 0;
+input {
+    width: 100%;
+    padding: 14px;
+    margin: 10px 0;
+    border: 1px solid #444;
+    border-radius: 8px;
+    background: #222;
+    color: white;
+    font-size: 16px;
 }
 
-.header p{
- font-size:20px;
- margin:5px;
+#home {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-.home-menu{
- margin-top:30px;
+.logo {
+    font-size: 42px;
+    color: #25D366;
+    cursor: pointer;
+    font-weight: bold;
 }
 
-.menu-item{
- font-size:30px;
- padding:15px 5px;
- margin:12px 0;
- cursor:pointer;
+.page {
+    display: none;
+    padding: 20px;
+    max-width: 600px;
+    margin: auto;
 }
 
-.now{
- color:#00ff00;
- font-weight:bold;
- animation:blink 1s infinite;
+h2 {
+    color: #25D366;
+    margin-bottom: 20px;
 }
 
-@keyframes blink{
- 0%,100%{opacity:1}
- 50%{opacity:0.15}
+.user {
+    padding: 16px;
+    background: #202020;
+    margin: 10px 0;
+    border-radius: 10px;
+    cursor: pointer;
 }
 
-.panel{
- background:white;
- border-radius:12px;
- padding:18px;
- max-width:550px;
- margin:15px auto;
- box-shadow:0 3px 10px #00666655;
+.user:hover {
+    background: #333;
 }
 
-h2{
- text-align:center;
- color:#087c48;
+#messages {
+    height: 55vh;
+    overflow-y: auto;
+    background: #111;
+    padding: 12px;
+    border-radius: 10px;
+    margin-bottom: 10px;
 }
 
-input,select{
- width:100%;
- padding:13px;
- margin:9px 0;
- border:1px solid #aaa;
- border-radius:6px;
- font-size:16px;
+.msg {
+    background: #075E35;
+    padding: 10px;
+    border-radius: 10px;
+    margin: 8px 0;
+    max-width: 85%;
+    width: fit-content;
+    overflow-wrap: anywhere;
 }
 
-button{
- width:100%;
- padding:13px;
- border:0;
- border-radius:7px;
- background:#087d3d;
- color:white;
- font-size:18px;
- margin-top:12px;
- cursor:pointer;
+.mine {
+    margin-left: auto;
+    background: #056044;
 }
 
-.back{
- background:#555;
+.small {
+    color: #aaa;
+    font-size: 12px;
 }
 
-.receipt{
- background:#f1fff2;
- padding:15px;
- border:2px dashed green;
- margin-top:15px;
- display:none;
-}
-
-small{
- color:#555;
+#recaptcha-container {
+    margin: 10px 0;
 }
 
 </style>
@@ -120,401 +117,470 @@ small{
 
 <body>
 
-<!-- HOME PAGE -->
+<!-- FIRST PAGE -->
 
-<div class="page" id="home">
-
-<div class="header">
-<h1>प्रगति फाइनेंसर</h1>
-<p>Welcome Dear Friends</p>
-<p>मेरा मनी स्पोर्ट कमेटी में आपका स्वागत है</p>
+<div id="home">
+    <div class="logo" onclick="showLogin()">
+        WhatsApp
+    </div>
 </div>
 
-<div class="home-menu">
+<!-- LOGIN PAGE -->
 
-<div class="menu-item" onclick="showPage('registration')">
-🏠 Home
+<div id="login" class="page">
+    <h2>WhatsApp Login</h2>
+
+    <p>अपना मोबाइल नंबर डालें</p>
+
+    <input
+        id="phone"
+        type="tel"
+        placeholder="10 Digit Mobile Number"
+        maxlength="10"
+    >
+
+    <div id="recaptcha-container"></div>
+
+    <button onclick="sendOTP()">
+        Send OTP
+    </button>
+
+    <input
+        id="otp"
+        type="number"
+        placeholder="Enter OTP"
+        style="display:none"
+    >
+
+    <button
+        id="verifyBtn"
+        onclick="verifyOTP()"
+        style="display:none"
+    >
+        Verify OTP
+    </button>
+
+    <p id="loginStatus"></p>
 </div>
 
-<div class="menu-item" onclick="showPage('form')">
-1. फॉर्म भरें -
-<span class="now">NOW</span>
+<!-- MEMBERS PAGE -->
+
+<div id="members" class="page">
+    <h2>WhatsApp Members</h2>
+
+    <p id="myNumber"></p>
+
+    <div id="userList">
+        Members Loading...
+    </div>
+
+    <button onclick="logout()">
+        Logout
+    </button>
 </div>
 
-<div class="menu-item" onclick="showPage('search')">
-2. अपना डेटा देखें -
-<span class="now">NOW</span>
-</div>
+<!-- CHAT PAGE -->
 
-</div>
-</div>
+<div id="chatPage" class="page">
 
+    <button onclick="showMembers()">
+        ← Back
+    </button>
 
-<!-- REGISTRATION PAGE -->
+    <h2 id="chatName">Chat</h2>
 
-<div class="page" id="form">
+    <div id="messages"></div>
 
-<div class="panel">
+    <input
+        id="messageInput"
+        type="text"
+        placeholder="Type a message..."
+    >
 
-<h2>Registration Form</h2>
+    <button onclick="sendMessage()">
+        Send Message
+    </button>
 
-<form id="memberForm">
-
-<input id="name" placeholder="1. आपका नाम" required>
-
-<input id="yourid" placeholder="2. Your ID" required>
-
-<input id="captainid" placeholder="3. Captain ID" required>
-
-<input id="phone" type="tel"
-placeholder="4. Your Phone Number"
-pattern="[0-9]{10}" required>
-
-<input id="captainphone" type="tel"
-placeholder="5. Captain Phone Number"
-pattern="[0-9]{10}" required>
-
-<input id="address"
-placeholder="6. आपका सामान्य पता (गाँव/ब्लॉक)"
-required>
-
-<select id="section" required>
-<option value="">7. Your Section चुनें</option>
-<option>A</option>
-<option>B</option>
-<option>C</option>
-<option>D</option>
-</select>
-
-<select id="month" required>
-<option value="">8. पैसे उठाने वाला Month चुनें</option>
-<option>Month-1</option>
-<option>Month-2</option>
-<option>Month-3</option>
-<option>Month-4</option>
-<option>Month-5</option>
-<option>Month-6</option>
-<option>Month-7</option>
-<option>Month-8</option>
-<option>Month-9</option>
-<option>Month-10</option>
-<option>Month-11</option>
-<option>Month-12</option>
-<option>Month-13</option>
-<option>Month-14</option>
-<option>Month-15</option>
-<option>Month-16</option>
-<option>Month-17</option>
-<option>Month-18</option>
-<option>Month-19</option>
-<option>Month-20</option>
-</select>
-
-<div>
-<label id="captchaQuestion"></label>
-<input id="captchaAnswer"
-type="number" placeholder="CAPTCHA का उत्तर" required>
-</div>
-
-<button type="submit" id="submitBtn">
-SUBMIT
-</button>
-
-</form>
-
-<div class="receipt" id="receipt">
-<h2>प्रगति फाइनेंसर</h2>
-<h3>Registration Receiving</h3>
-<p id="receiptDetails"></p>
-
-<button onclick="downloadReceipt()">
-Download Receiving
-</button>
-
-<button onclick="shareReceipt()">
-Share Receiving
-</button>
-</div>
-
-<button class="back" onclick="showPage('home')">
-HOME पर वापस जाएँ
-</button>
-
-</div>
 </div>
 
 
-<!-- DATA SEARCH PAGE -->
+<!-- FIREBASE SDK -->
 
-<div class="page" id="search">
-
-<div class="panel">
-
-<h2>अपना डेटा देखें</h2>
-
-<input id="searchReg"
-placeholder="Registration Number डालें">
-
-<input id="searchName"
-placeholder="Your Name डालें">
-
-<button onclick="findPDF()">
-SEARCH PDF
-</button>
-
-<p id="searchMessage"></p>
-
-<button class="back" onclick="showPage('home')">
-HOME पर वापस जाएँ
-</button>
-
-</div>
-</div>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 
 
 <script>
 
-// SUPABASE CONNECTION
+// 1. FIREBASE CONFIGURATION
 
-const SUPABASE_URL = "b136cffa-f466-4cf1-93ec-b1ce26a0aa45 ";
-
-const SUPABASE_KEY = "sb_publishable_3ICLHg0yvuiYYlAYig_Oxg_uViXahTO";
-
-const db = window.supabase.createClient(
-SUPABASE_URL,
-SUPABASE_KEY
-);
-
-
-// PAGE CHANGE
-
-function showPage(id){
-
-document.querySelectorAll(".page").forEach(p=>{
-p.style.display="none";
-});
-
-document.getElementById(id).style.display="block";
-
-window.scrollTo(0,0);
-
-}
-
-
-// CAPTCHA
-
-let captchaResult;
-
-function newCaptcha(){
-
-let a=Math.floor(Math.random()*9)+1;
-let b=Math.floor(Math.random()*9)+1;
-
-captchaResult=a+b;
-
-document.getElementById("captchaQuestion").innerText=
-"CAPTCHA: "+a+" + "+b+" = ?";
-}
-
-newCaptcha();
-
-
-// REGISTRATION
-
-let currentReceipt="";
-
-document.getElementById("memberForm")
-.addEventListener("submit",async function(e){
-
-e.preventDefault();
-
-let answer=Number(
-document.getElementById("captchaAnswer").value
-);
-
-if(answer!==captchaResult){
-
-alert("गलत CAPTCHA! फिर से प्रयास करें");
-
-newCaptcha();
-
-return;
-}
-
-let regNo="PF-"+Date.now()+"-"+Math.floor(Math.random()*1000);
-
-let data={
-
-reg_no:regNo,
-
-name:document.getElementById("name").value.trim(),
-
-your_id:document.getElementById("yourid").value.trim(),
-
-captain_id:document.getElementById("captainid").value.trim(),
-
-phone:document.getElementById("phone").value.trim(),
-
-captain_phone:document.getElementById("captainphone").value.trim(),
-
-address:document.getElementById("address").value.trim(),
-
-section:document.getElementById("section").value,
-
-month:document.getElementById("month").value
-
+const firebaseConfig = {
+    apiKey: "YOUR_API_KEY",
+    authDomain: "YOUR_PROJECT.firebaseapp.com",
+    projectId: "YOUR_PROJECT_ID",
+    storageBucket: "YOUR_PROJECT.appspot.com",
+    messagingSenderId: "YOUR_SENDER_ID",
+    appId: "YOUR_APP_ID"
 };
 
-let btn=document.getElementById("submitBtn");
+firebase.initializeApp(firebaseConfig);
 
-btn.disabled=true;
-btn.innerText="Please Wait...";
+const auth = firebase.auth();
+const db = firebase.firestore();
 
-try{
 
-const {error}=await db
-.from("registrations")
-.insert([data]);
+// 2. VARIABLES
 
-if(error) throw error;
+let confirmationResult = null;
+let currentUser = null;
+let selectedUser = null;
+let unsubscribeMessages = null;
+let unsubscribeUsers = null;
 
-currentReceipt=
-"प्रगति फाइनेंसर\n"+
-"Registration Receiving\n\n"+
-"Registration Number: "+regNo+"\n"+
-"Name: "+data.name+"\n"+
-"Your ID: "+data.your_id+"\n"+
-"Captain ID: "+data.captain_id+"\n"+
-"Phone: "+data.phone+"\n"+
-"Captain Phone: "+data.captain_phone+"\n"+
-"Section: "+data.section+"\n"+
-"Month: "+data.month+"\n"+
-"Date: "+new Date().toLocaleString("en-IN");
 
-document.getElementById("receiptDetails")
-.innerText=currentReceipt;
+// 3. PAGE CHANGE
 
-document.getElementById("receipt").style.display="block";
-
-document.getElementById("memberForm").reset();
-
-newCaptcha();
-
-alert("Registration सफल हुआ!");
-
-}catch(error){
-
-alert("Error: "+error.message);
-
-}finally{
-
-btn.disabled=false;
-btn.innerText="SUBMIT";
-
+function hideAll() {
+    document.getElementById("home").style.display = "none";
+    document.getElementById("login").style.display = "none";
+    document.getElementById("members").style.display = "none";
+    document.getElementById("chatPage").style.display = "none";
 }
+
+function showLogin() {
+    hideAll();
+    document.getElementById("login").style.display = "block";
+}
+
+
+// 4. SEND OTP
+
+async function sendOTP() {
+
+    const number = document.getElementById("phone").value.trim();
+
+    if (!/^[0-9]{10}$/.test(number)) {
+        alert("सही 10 अंकों का मोबाइल नंबर डालें");
+        return;
+    }
+
+    const fullNumber = "+91" + number;
+
+    try {
+
+        if (!window.recaptchaVerifier) {
+            window.recaptchaVerifier =
+                new firebase.auth.RecaptchaVerifier(
+                    "recaptcha-container",
+                    { size: "normal" }
+                );
+
+            await window.recaptchaVerifier.render();
+        }
+
+        confirmationResult =
+            await auth.signInWithPhoneNumber(
+                fullNumber,
+                window.recaptchaVerifier
+            );
+
+        document.getElementById("otp").style.display = "block";
+        document.getElementById("verifyBtn").style.display = "block";
+
+        document.getElementById("loginStatus").innerText =
+            "OTP भेज दिया गया है";
+
+    } catch(error) {
+
+        alert(error.message);
+
+        if (window.recaptchaVerifier) {
+            window.recaptchaVerifier.clear();
+            window.recaptchaVerifier = null;
+        }
+    }
+}
+
+
+// 5. VERIFY OTP AND CREATE PROFILE
+
+async function verifyOTP() {
+
+    const code = document.getElementById("otp").value.trim();
+
+    try {
+
+        if (!confirmationResult) {
+            alert("पहले OTP भेजें");
+            return;
+        }
+
+        const result = await confirmationResult.confirm(code);
+
+        currentUser = result.user;
+
+        const profileRef = db.collection("users").doc(currentUser.uid);
+
+        const profile = await profileRef.get();
+
+        if (!profile.exists) {
+
+            await profileRef.set({
+                uid: currentUser.uid,
+                phone: currentUser.phoneNumber,
+                createdAt: firebase.firestore.FieldValue.serverTimestamp()
+            });
+
+        }
+
+        showMembers();
+
+    } catch(error) {
+
+        alert("OTP गलत है या सत्यापन असफल हुआ: " + error.message);
+
+    }
+}
+
+
+// 6. SHOW ALL MEMBERS
+
+function showMembers() {
+
+    hideAll();
+
+    document.getElementById("members").style.display = "block";
+
+    document.getElementById("myNumber").innerText =
+        "Your Number: " + currentUser.phoneNumber;
+
+    if (unsubscribeUsers) unsubscribeUsers();
+
+    unsubscribeUsers = db.collection("users")
+        .onSnapshot(snapshot => {
+
+            const list = document.getElementById("userList");
+
+            list.innerHTML = "";
+
+            snapshot.forEach(doc => {
+
+                const user = doc.data();
+
+                if (user.uid === currentUser.uid) return;
+
+                const div = document.createElement("div");
+
+                div.className = "user";
+
+                div.innerHTML =
+                    "<b>Member</b><br><span class='small'></span>";
+
+                div.querySelector("span").textContent = user.phone;
+
+                div.onclick = () => openChat(user);
+
+                list.appendChild(div);
+
+            });
+
+            if (list.innerHTML === "") {
+                list.innerText = "अभी कोई दूसरा सदस्य नहीं है";
+            }
+
+        }, error => alert(error.message));
+}
+
+
+// 7. CREATE CHAT ID
+
+function getChatID(uid1, uid2) {
+    return [uid1, uid2].sort().join("_");
+}
+
+
+// 8. OPEN CHAT
+
+function openChat(user) {
+
+    selectedUser = user;
+
+    hideAll();
+
+    document.getElementById("chatPage").style.display = "block";
+
+    document.getElementById("chatName").innerText = user.phone;
+
+    if (unsubscribeMessages) unsubscribeMessages();
+
+    const chatID = getChatID(currentUser.uid, user.uid);
+
+    unsubscribeMessages = db.collection("chats")
+        .doc(chatID)
+        .collection("messages")
+        .orderBy("createdAt")
+        .onSnapshot(snapshot => {
+
+            const box = document.getElementById("messages");
+
+            box.innerHTML = "";
+
+            snapshot.forEach(doc => {
+
+                const msg = doc.data();
+
+                const div = document.createElement("div");
+
+                div.className = "msg" +
+                    (msg.sender === currentUser.uid ? " mine" : "");
+
+                div.textContent = msg.text;
+
+                box.appendChild(div);
+
+            });
+
+            box.scrollTop = box.scrollHeight;
+
+        }, error => alert(error.message));
+}
+
+
+// 9. SEND MESSAGE
+
+async function sendMessage() {
+
+    const input = document.getElementById("messageInput");
+
+    const text = input.value.trim();
+
+    if (!text || !selectedUser) return;
+
+    const chatID = getChatID(
+        currentUser.uid,
+        selectedUser.uid
+    );
+
+    try {
+
+        await db.collection("chats")
+            .doc(chatID)
+            .collection("messages")
+            .add({
+
+                text: text,
+                sender: currentUser.uid,
+                receiver: selectedUser.uid,
+                createdAt: firebase.firestore.FieldValue.serverTimestamp()
+
+            });
+
+        input.value = "";
+
+    } catch(error) {
+
+        alert(error.message);
+
+    }
+}
+
+
+// 10. BACK TO MEMBERS
+
+function showMembers() {
+
+    hideAll();
+
+    document.getElementById("members").style.display = "block";
+
+    document.getElementById("myNumber").innerText =
+        "Your Number: " + currentUser.phoneNumber;
+
+    if (unsubscribeUsers) unsubscribeUsers();
+
+    unsubscribeUsers = db.collection("users")
+        .onSnapshot(snapshot => {
+
+            const list = document.getElementById("userList");
+            list.innerHTML = "";
+
+            snapshot.forEach(doc => {
+
+                const user = doc.data();
+
+                if (user.uid === currentUser.uid) return;
+
+                const div = document.createElement("div");
+                div.className = "user";
+                div.textContent = "Member - " + user.phone;
+
+                div.onclick = () => openChat(user);
+
+                list.appendChild(div);
+
+            });
+
+            if (list.innerHTML === "") {
+                list.innerText = "अभी कोई दूसरा सदस्य नहीं है";
+            }
+
+        }, error => alert(error.message));
+}
+
+
+// 11. LOGOUT
+
+async function logout() {
+
+    if (unsubscribeUsers) unsubscribeUsers();
+    if (unsubscribeMessages) unsubscribeMessages();
+
+    await auth.signOut();
+
+    currentUser = null;
+    selectedUser = null;
+
+    hideAll();
+
+    document.getElementById("home").style.display = "flex";
+}
+
+
+// 12. AUTO LOGIN CHECK
+
+auth.onAuthStateChanged(async user => {
+
+    if (user) {
+
+        currentUser = user;
+
+        try {
+
+            const ref = db.collection("users").doc(user.uid);
+            const profile = await ref.get();
+
+            if (!profile.exists) {
+
+                await ref.set({
+                    uid: user.uid,
+                    phone: user.phoneNumber,
+                    createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                });
+
+            }
+
+            showMembers();
+
+        } catch(error) {
+
+            alert(error.message);
+
+        }
+
+    }
 
 });
-
-
-// DOWNLOAD RECEIVING
-
-function downloadReceipt(){
-
-let blob=new Blob(
-[currentReceipt],
-{type:"text/plain;charset=utf-8"}
-);
-
-let url=URL.createObjectURL(blob);
-
-let a=document.createElement("a");
-
-a.href=url;
-a.download="Pragati-Receiving.txt";
-a.click();
-
-URL.revokeObjectURL(url);
-
-}
-
-
-// SHARE RECEIVING
-
-async function shareReceipt(){
-
-if(navigator.share){
-
-try{
-
-await navigator.share({
-title:"प्रगति फाइनेंसर Receiving",
-text:currentReceipt
-});
-
-}catch(e){}
-
-}else{
-
-await navigator.clipboard.writeText(currentReceipt);
-
-alert("Receiving कॉपी हो गई।");
-
-}
-
-}
-
-
-// PDF SEARCH
-
-async function findPDF(){
-
-let reg=document.getElementById("searchReg").value.trim();
-
-let name=document.getElementById("searchName").value.trim();
-
-let msg=document.getElementById("searchMessage");
-
-if(!reg || !name){
-
-msg.innerText="Registration Number और Name दोनों डालें।";
-
-return;
-
-}
-
-msg.innerText="Searching...";
-
-try{
-
-const {data,error}=await db.rpc(
-"find_member_pdf",
-{
-p_reg_no:reg,
-p_name:name
-}
-);
-
-if(error) throw error;
-
-if(data && data.length>0){
-
-msg.innerText="PDF मिल गई। खोल रहे हैं...";
-
-window.open(data[0].pdf_url,"_blank");
-
-}else{
-
-msg.innerText="कोई PDF नहीं मिली। जानकारी जाँचें।";
-
-}
-
-}catch(error){
-
-msg.innerText="Error: "+error.message;
-
-}
-
-}
 
 </script>
 
